@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batting Order Optimizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Batting Order Optimizer for Youth Coaches</h1>
+    <h2><img src="https://www.thedataschool.com.au/wp-content/uploads/2019/03/baseball-2410657_960_720.jpg"></h2>
+    <form id="playerForm">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>On-Base Percentage (OBP)</th>
+                    <th>Slugging Percentage (SLG)</th>
+                </tr>
+            </thead>
+            <tbody id="playerTable">
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG" step="0.001"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="name" placeholder="Player Name"></td>
+                    <td><input type="number" class="obp" placeholder="OBP" step="0.001"></td>
+                    <td><input type="number" class="slg" placeholder="SLG"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="optimizeBattingOrder()">Optimize Batting Order</button>
+    </form>
+    <h2>Optimized Batting Order:</h2>
+    <div id="result"></div>
+
+    <script>
+        function optimizeBattingOrder() {
+            const resultDiv = document.getElementById("result");
+
+            // Collect user inputs
+            const playerRows = document.querySelectorAll("#playerTable tr");
+            const players = Array.from(playerRows).map(row => {
+                const name = row.querySelector(".name").value.trim();
+                const obp = parseFloat(row.querySelector(".obp").value);
+                const slg = parseFloat(row.querySelector(".slg").value);
+
+                if (!name || isNaN(obp) || isNaN(slg)) {
+                    alert("Please fill out all fields with valid values.");
+                    throw new Error("Invalid input in row");
+                }
+                return { name, obp, slg };
+            });
+
+            // Sort players (e.g., top OBP first, then SLG)
+            players.sort((a, b) => b.obp - a.obp || b.slg - a.slg);
+
+            // Display optimized batting order
+            resultDiv.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Player Name</th>
+                            <th>OBP</th>
+                            <th>SLG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${players.map((player, index) => `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${player.name}</td>
+                                <td>${player.obp.toFixed(3)}</td>
+                                <td>${player.slg.toFixed(3)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+    </script>
+    <h4> Credits go to: Aryavikram Pingali for creating the website, Brayden O'Connor for providing which statistics to use, Nick Phan for writing the paragraphs, and Nolan Yeager for also writing the paragraphs.</h4>
+</body>
+</html>
